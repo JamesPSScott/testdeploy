@@ -42,6 +42,10 @@ jobs:
           #client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3E289A84E3BC4C31AE6E724F760912D3 }}
           #tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9E7BFEA57B264E9AB308F270852E705F }}
           #subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3F99B92382254DA8AEDA01B7147E9F32 }}
+          
+      - name: Test webapp list
+        run: |
+          az webapp list
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
