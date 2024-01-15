@@ -68,5 +68,5 @@ jobs:
         with:
           app-name: 'testweatherappjpss'
           slot-name: 'Production'
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
+          package: .
           
