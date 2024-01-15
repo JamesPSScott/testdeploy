@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAzFunction", "TestAzFunction\TestAzFunction.csproj", "{B18150AC-DEE6-4959-9575-63CC2CD89141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapi", "testapi\testapi.csproj", "{DF4FF30A-FD1D-4F29-BE6B-8373C146A2C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B18150AC-DEE6-4959-9575-63CC2CD89141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B18150AC-DEE6-4959-9575-63CC2CD89141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B18150AC-DEE6-4959-9575-63CC2CD89141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4FF30A-FD1D-4F29-BE6B-8373C146A2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4FF30A-FD1D-4F29-BE6B-8373C146A2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4FF30A-FD1D-4F29-BE6B-8373C146A2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4FF30A-FD1D-4F29-BE6B-8373C146A2C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
