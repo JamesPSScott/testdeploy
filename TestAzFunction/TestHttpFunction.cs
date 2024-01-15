@@ -29,7 +29,7 @@ public class TestHttpFunction
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-        response.WriteString($"Welcome to Azure Functions! Value1: {_config["secret1"]} - Value 2: {_config["secret2"]}");
+        response.WriteString($"Welcome to Azure Functions this is v2! Value1: {_config["secret1"]} - Value 2: {_config["secret2"]}");
 
         return response;
         
