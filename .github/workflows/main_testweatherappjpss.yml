@@ -26,10 +26,10 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build ${{AZURE_WEBAPP_PACKAGE_PATH}} --configuration Release
+        run: dotnet build ${{ AZURE_WEBAPP_PACKAGE_PATH }} --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ${{AZURE_WEBAPP_PACKAGE_PATH}} -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ${{ AZURE_WEBAPP_PACKAGE_PATH }} -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -65,5 +65,5 @@ jobs:
         with:
           app-name: 'testweatherappjpss'
           slot-name: 'Production'
-          package: ${{AZURE_WEBAPP_PACKAGE_PATH}}/myapp
+          package: ${{ AZURE_WEBAPP_PACKAGE_PATH }}/myapp
           
