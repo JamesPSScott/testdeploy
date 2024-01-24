@@ -36,10 +36,7 @@ jobs:
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
-          pushd ./output
-          zip -r ../app.zip ./
-          popd
-          ls -la app.zip
+          ls -la ./output
           popd
           
       #- name: 'env list'
@@ -51,22 +48,22 @@ jobs:
       #    ls -la
       #    popd
           
-      - name: 'test deploy'
-        shell: bash
-        run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          ls -la app.zip
-          az functionapp deployment source config-zip -g dev -n jpss-test-function --src app.zip
-          popd
+      #- name: 'test deploy'
+      #  shell: bash
+      #  run: |
+      #    pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+      #    ls -la app.zip
+      #    az functionapp deployment source config-zip -g dev -n jpss-test-function --src app.zip
+      #    popd
       
-      #- name: 'Run Azure Functions Action'
-      #  uses: Azure/functions-action@v1
-      #  id: fa
-      #  with:
-      #    app-name: 'jpss-test-function'
-      #    slot-name: 'Production'
-      #    package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-      #    publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D5807636A26406792F9366457E8CEB7 }}
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: 'jpss-test-function'
+          slot-name: 'Production'
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D5807636A26406792F9366457E8CEB7 }}
           
       - name: logout
         run: |
