@@ -25,10 +25,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.CICD_SERVICE_PRINCIPAL }}
-
-      - name: list function apps
-        run: |
-          az functionapp list
           
       - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
         uses: actions/setup-dotnet@v1
@@ -48,13 +44,17 @@ jobs:
         run: |
           env
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          ls -la ./output
           zip -r app.zip ./output
+          ls -la
+          popd
           
       - name: 'test deploy'
         shell: bash
         run: |
-          az functionapp deployment source config-zip -g dev -n jpss-test-function --src './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/app.zip'
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          ls -la app.zip
+          az functionapp deployment source config-zip -g dev -n jpss-test-function --src app.zip
+          popd
       
       #- name: 'Run Azure Functions Action'
       #  uses: Azure/functions-action@v1
