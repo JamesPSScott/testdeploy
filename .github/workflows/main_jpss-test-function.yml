@@ -21,6 +21,15 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CICD_SERVICE_PRINCIPAL }}
+
+      - name: list function apps
+        run: |
+          az functionapp list
+          
       - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
         uses: actions/setup-dotnet@v1
         with:
@@ -40,4 +49,8 @@ jobs:
           app-name: 'jpss-test-function'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D5807636A26406792F9366457E8CEB7 }}
+          #publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D5807636A26406792F9366457E8CEB7 }}
+          
+      - name: logout
+        run: |
+          az logout
