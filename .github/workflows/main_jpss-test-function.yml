@@ -43,10 +43,11 @@ jobs:
           ls -la ./output
           popd
           
-      - name: 'list output dir'
+      - name: 'env list'
         shell: bash
         run: |
-          ls -la '${{ env.AZURE_FUNCTION_APP_PACKAGE_PATH }}./output'
+          env
+          echo 'thistest//${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
       
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
