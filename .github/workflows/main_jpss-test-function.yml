@@ -48,6 +48,7 @@ jobs:
         run: |
           env
           echo 'thistest//${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          ls -la './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
       
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
