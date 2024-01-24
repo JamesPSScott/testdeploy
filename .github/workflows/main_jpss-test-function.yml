@@ -46,7 +46,7 @@ jobs:
       - name: 'list output dir'
         shell: bash
         run: |
-          ls -la '${{ env.AZURE_FUNCTION_APP_PACKAGE_PATH }}'./output
+          ls -la '${{ env.AZURE_FUNCTION_APP_PACKAGE_PATH }}./output'
       
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
