@@ -47,16 +47,22 @@ jobs:
         shell: bash
         run: |
           env
-          echo 'thistest//${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          ls -la './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          ls -la ./output
+          zip -r app.zip ./output
+          
+      - name: 'test deploy'
+        shell: bash
+        run: |
+          az functionapp deployment source config-zip -g dev -n jpss-test-function --src './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/app.zip'
       
-      - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v1
-        id: fa
-        with:
-          app-name: 'jpss-test-function'
-          slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+      #- name: 'Run Azure Functions Action'
+      #  uses: Azure/functions-action@v1
+      #  id: fa
+      #  with:
+      #    app-name: 'jpss-test-function'
+      #    slot-name: 'Production'
+      #    package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
           #publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D5807636A26406792F9366457E8CEB7 }}
           
       - name: logout
