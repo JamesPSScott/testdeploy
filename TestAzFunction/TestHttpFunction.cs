@@ -19,7 +19,8 @@ public class TestHttpFunction
 
         _config = config;
     }
-
+    
+    // test push
     [Function("TestHttpFunction")]
     public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
         FunctionContext executionContext)
