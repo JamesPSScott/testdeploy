@@ -1,6 +1,7 @@
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var host = new HostBuilder()
     .ConfigureAppConfiguration((context, configBuilder) =>
@@ -9,19 +10,18 @@ var host = new HostBuilder()
         
         if (context.HostingEnvironment.IsEnvironment("Production"))
         {
-            configBuilder.AddAzureKeyVault(
+            /*configBuilder.AddAzureKeyVault(
                 new Uri("https://test-key-vault-jpss.vault.azure.net/"),
                 new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
                     ManagedIdentityClientId = "e2df078a-ae8a-48ee-a296-5ad8f5e4d99b"//"c901d444-6b59-4ff7-a5b2-6b0fa3f6fe17"
-                }));
+                }));*/
         }
 
     })
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices((context, services) =>
     {
-        
     })
     .Build();
 
