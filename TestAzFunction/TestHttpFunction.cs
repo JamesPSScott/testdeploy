@@ -34,7 +34,10 @@ public class TestHttpFunction
         Response<KeyVaultSecret>? secret = null;
         try
         {
-            var test = new SecretClient(new Uri("https://test-key-vault-jpss.vault.azure.net/"), new DefaultAzureCredential());
+            var test = new SecretClient(new Uri("https://test-key-vault-jpss.vault.azure.net/"), new DefaultAzureCredential( new DefaultAzureCredentialOptions()
+            {
+                ManagedIdentityClientId = "d66364cb-427d-46bb-9ba8-be4c8aa6a74a"
+            }));
 
             secret = await test.GetSecretAsync("secret1");
             
