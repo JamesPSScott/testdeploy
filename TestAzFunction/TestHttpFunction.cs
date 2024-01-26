@@ -65,9 +65,9 @@ public class TestHttpFunction
             var result = containerClient.GetBlobsAsync();
             await foreach (var test in result.AsPages())
             {
-                foreach (var anothertest in test.Values)
+                foreach (var blobItem in test.Values)
                 {
-                    _logger.LogInformation("blob: ", anothertest.Name);
+                    _logger.LogInformation("blob: " + blobItem.Name);
                 }
             }
         }
