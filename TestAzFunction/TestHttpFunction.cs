@@ -3,6 +3,7 @@ using System.Net;
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -50,11 +51,39 @@ public class TestHttpFunction
         
         _logger.LogInformation("C# HTTP trigger function processed a request.");
 
+        try
+        {
+            _logger.LogInformation("About to test blob functinoality");
+            BlobServiceClient blobClient = new BlobServiceClient(
+                new Uri("https://functionstorage011224.blob.core.windows.net/"), new DefaultAzureCredential(
+                    new DefaultAzureCredentialOptions()
+                    {
+                        ManagedIdentityClientId = "d66364cb-427d-46bb-9ba8-be4c8aa6a74a"
+                    }));
+
+            BlobContainerClient containerClient = blobClient.GetBlobContainerClient("test");
+            var result = containerClient.GetBlobsAsync();
+            await foreach (var test in result.AsPages())
+            {
+                foreach (var anothertest in test.Values)
+                {
+                    _logger.LogInformation("blob: ", anothertest.Name);
+                }
+            }
+        }
+        catch (Exception x)
+        {
+            _logger.LogError("Error with BLOBS: " + x.Message);
+        }
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
+        
+        
         response.WriteString($"Welcome to Azure Functions this is v2! Value1: { _config["secret1"]} - Value 2: {_config["secret2"]}");
 
+        
+        
         return response;
         
     }

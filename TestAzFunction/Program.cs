@@ -17,6 +17,9 @@ var host = new HostBuilder()
     {
         if (context.HostingEnvironment.IsEnvironment("Production"))
         {
+            // if you want to use a system managed identity you can use
+            // DefaultAzureCredential() with no client id...
+            // using client id means you have your own managed identity you control
             configBuilder.AddAzureKeyVault(
                 new Uri("https://test-key-vault-jpss.vault.azure.net/"),
             //    new DefaultAzureCredential()
