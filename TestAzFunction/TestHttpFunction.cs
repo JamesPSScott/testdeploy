@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.Functions.Worker;
@@ -28,13 +29,15 @@ public class TestHttpFunction
         FunctionContext executionContext)
     {
         _logger.LogInformation("about to retrieve keyvault val");
+
+        Response<KeyVaultSecret>? secret = null;
         try
         {
             var test = new SecretClient(new Uri("https://test-key-vault-jpss.vault.azure.net/"), new DefaultAzureCredential());
 
-            var someVal = await test.GetSecretAsync("secret1");
+            secret = await test.GetSecretAsync("secret1");
             
-            _logger.LogInformation("I tried to retrieve someVal: " + someVal.Value);
+            _logger.LogInformation("I tried to retrieve someVal: " + secret.Value);
         }
         catch (Exception e)
         {
@@ -46,7 +49,7 @@ public class TestHttpFunction
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-        response.WriteString($"Welcome to Azure Functions this is v2! Value1: {_config["secret1"]} - Value 2: {_config["secret2"]}");
+        response.WriteString($"Welcome to Azure Functions this is v2! Value1: { (secret!.HasValue? secret.Value : _config["secret1"])} - Value 2: {_config["secret2"]}");
 
         return response;
         
