@@ -17,13 +17,13 @@ var host = new HostBuilder()
     {
         if (context.HostingEnvironment.IsEnvironment("Production"))
         {
-            /*configBuilder.AddAzureKeyVault(
+            configBuilder.AddAzureKeyVault(
                 new Uri("https://test-key-vault-jpss.vault.azure.net/"),
-                new DefaultAzureCredential()
-                /*new DefaultAzureCredential(new DefaultAzureCredentialOptions
-            //    {
-            //        ManagedIdentityClientId = "ccba3238-7fe7-4fdb-a30c-9bec1f5dac45"
-            //    })*///);
+            //    new DefaultAzureCredential()
+                new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                {
+                    ManagedIdentityClientId = "d66364cb-427d-46bb-9ba8-be4c8aa6a74a"
+                }));
         }
     })
     .Build();
