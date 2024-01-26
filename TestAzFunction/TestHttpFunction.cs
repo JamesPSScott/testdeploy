@@ -34,7 +34,7 @@ public class TestHttpFunction
 
             var someVal = await test.GetSecretAsync("secret1");
             
-            _logger.LogInformation("I tried to retrieve someVal: " + someVal);
+            _logger.LogInformation("I tried to retrieve someVal: " + someVal.Value);
         }
         catch (Exception e)
         {
