@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -22,9 +24,23 @@ public class TestHttpFunction
     
     // test push
     [Function("TestHttpFunction")]
-    public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
         FunctionContext executionContext)
     {
+        _logger.LogInformation("about to retrieve keyvault val");
+        try
+        {
+            var test = new SecretClient(new Uri("https://test-key-vault-jpss.vault.azure.net/"), new DefaultAzureCredential());
+
+            var someVal = await test.GetSecretAsync("secret1");
+            
+            _logger.LogInformation("I tried to retrieve someVal: " + someVal);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Error retrieving vault: " + e.Message);
+        }
+        
         _logger.LogInformation("C# HTTP trigger function processed a request.");
 
         var response = req.CreateResponse(HttpStatusCode.OK);
