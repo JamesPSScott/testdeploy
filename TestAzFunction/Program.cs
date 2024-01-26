@@ -8,20 +8,23 @@ var host = new HostBuilder()
     {
         configBuilder.AddJsonFile("app.settings.json");
         
-        if (context.HostingEnvironment.IsEnvironment("Production"))
-        {
-            configBuilder.AddAzureKeyVault(
-                new Uri("https://test-key-vault-jpss.vault.azure.net/"),
-                new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                {
-                    ManagedIdentityClientId = "ccba3238-7fe7-4fdb-a30c-9bec1f5dac45"
-                }));
-        }
-
     })
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices((context, services) =>
     {
+    })
+    .ConfigureAppConfiguration((context, configBuilder) =>
+    {
+        if (context.HostingEnvironment.IsEnvironment("Production"))
+        {
+            configBuilder.AddAzureKeyVault(
+                new Uri("https://test-key-vault-jpss.vault.azure.net/"),
+                new DefaultAzureCredential()
+                /*new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                {
+                    ManagedIdentityClientId = "ccba3238-7fe7-4fdb-a30c-9bec1f5dac45"
+                })*/);
+        }
     })
     .Build();
 
