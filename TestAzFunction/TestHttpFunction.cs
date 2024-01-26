@@ -37,7 +37,7 @@ public class TestHttpFunction
 
             secret = await test.GetSecretAsync("secret1");
             
-            _logger.LogInformation("I tried to retrieve someVal: " + secret.Value);
+            _logger.LogInformation("I tried to retrieve someVal: " + secret.Value.Value);
         }
         catch (Exception e)
         {
@@ -49,7 +49,7 @@ public class TestHttpFunction
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-        response.WriteString($"Welcome to Azure Functions this is v2! Value1: { (secret!.HasValue? secret.Value : _config["secret1"])} - Value 2: {_config["secret2"]}");
+        response.WriteString($"Welcome to Azure Functions this is v2! Value1: { (secret!.HasValue? secret.Value.Value : _config["secret1"])} - Value 2: {_config["secret2"]}");
 
         return response;
         
