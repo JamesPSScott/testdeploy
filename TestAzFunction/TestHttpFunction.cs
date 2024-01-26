@@ -30,6 +30,7 @@ public class TestHttpFunction
     {
         _logger.LogInformation("about to retrieve keyvault val");
 
+        _logger.LogInformation($"LETS SEE IF AddAzureKeyVault works as expected: {_config["secret1"]}");
         Response<KeyVaultSecret>? secret = null;
         try
         {
@@ -49,7 +50,7 @@ public class TestHttpFunction
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-        response.WriteString($"Welcome to Azure Functions this is v2! Value1: { (secret!.HasValue? secret.Value.Value : _config["secret1"])} - Value 2: {_config["secret2"]}");
+        response.WriteString($"Welcome to Azure Functions this is v2! Value1: { _config["secret1"]} - Value 2: {_config["secret2"]}");
 
         return response;
         
